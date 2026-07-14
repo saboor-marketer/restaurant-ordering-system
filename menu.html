@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - FoodieHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-geo-alt-fill"></i> FoodieHub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="menu.html">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="favorites.html">Favorites</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#dashboardModal">Dashboard</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-outline-light btn-sm" id="themeToggle">
+                        <i class="bi bi-moon"></i>
+                    </button>
+                    <a class="btn btn-outline-light position-relative" href="cart.html">
+                        <i class="bi bi-cart3"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartBadge">
+                            0
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Header -->
+    <section class="py-4 bg-light">
+        <div class="container">
+            <h1 class="display-5 fw-bold">Our Menu</h1>
+            <p class="text-muted">Explore our delicious food options</p>
+        </div>
+    </section>
+
+    <!-- Search and Filter Section -->
+    <section class="py-4">
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search food by name...">
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <select class="form-select" id="categoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="pizza">🍕 Pizza</option>
+                        <option value="burgers">🍔 Burgers</option>
+                        <option value="chicken">🍗 Chicken</option>
+                        <option value="fastfood">🌮 Fast Food</option>
+                        <option value="pasta">🍝 Pasta</option>
+                        <option value="salads">🥗 Salads</option>
+                        <option value="desserts">🍰 Desserts</option>
+                        <option value="drinks">☕ Drinks</option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <select class="form-select" id="sortFilter">
+                        <option value="default">Sort By</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Rating</option>
+                        <option value="time">Preparation Time</option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="featuredOnly">
+                        <label class="form-check-label" for="featuredOnly">Featured Only</label>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-outline-secondary w-100" id="resetFilters">
+                        <i class="bi bi-x-circle"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Pills -->
+    <section class="py-3 bg-light">
+        <div class="container">
+            <div class="d-flex flex-wrap gap-2" id="categoryPills">
+                <button class="btn btn-primary category-pill active" data-category="all">All</button>
+                <button class="btn btn-outline-primary category-pill" data-category="pizza">🍕 Pizza</button>
+                <button class="btn btn-outline-primary category-pill" data-category="burgers">🍔 Burgers</button>
+                <button class="btn btn-outline-primary category-pill" data-category="chicken">🍗 Chicken</button>
+                <button class="btn btn-outline-primary category-pill" data-category="fastfood">🌮 Fast Food</button>
+                <button class="btn btn-outline-primary category-pill" data-category="pasta">🍝 Pasta</button>
+                <button class="btn btn-outline-primary category-pill" data-category="salads">🥗 Salads</button>
+                <button class="btn btn-outline-primary category-pill" data-category="desserts">🍰 Desserts</button>
+                <button class="btn btn-outline-primary category-pill" data-category="drinks">☕ Drinks</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Food Items Grid -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4" id="foodItems">
+                <!-- Food items will be loaded here -->
+            </div>
+            <div class="text-center mt-4 d-none" id="noResults">
+                <i class="bi bi-search display-1 text-muted"></i>
+                <h4 class="mt-3">No items found</h4>
+                <p class="text-muted">Try adjusting your filters or search terms</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-3">
+                    <h5>FoodieHub</h5>
+                    <p class="text-white-50">Delivering happiness through delicious food since 2020.</p>
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li><a href="menu.html" class="text-white-50 text-decoration-none">Menu</a></li>
+                        <li><a href="cart.html" class="text-white-50 text-decoration-none">Cart</a></li>
+                        <li><a href="favorites.html" class="text-white-50 text-decoration-none">Favorites</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <h5>Follow Us</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white fs-4"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white fs-4"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white fs-4"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <p class="text-center text-white-50 mb-0">&copy; 2024 FoodieHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Food Detail Modal -->
+    <div class="modal fade" id="foodDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="foodDetailTitle">Food Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="" alt="" class="img-fluid rounded" id="foodDetailImage">
+                        </div>
+                        <div class="col-md-6">
+                            <h4 id="foodDetailName"></h4>
+                            <p class="text-muted" id="foodDetailDescription"></p>
+                            <div class="d-flex gap-3 mb-3">
+                                <span class="badge bg-warning text-dark"><i class="bi bi-star-fill"></i> <span id="foodDetailRating"></span></span>
+                                <span class="badge bg-info"><i class="bi bi-clock"></i> <span id="foodDetailTime"></span> min</span>
+                            </div>
+                            <h3 class="text-primary" id="foodDetailPrice"></h3>
+                            <div class="mt-4">
+                                <button class="btn btn-primary btn-lg" id="foodDetailAddToCart">
+                                    <i class="bi bi-cart-plus"></i> Add to Cart
+                                </button>
+                                <button class="btn btn-outline-danger btn-lg ms-2" id="foodDetailFavorite">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Modal -->
+    <div class="modal fade" id="dashboardModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Restaurant Dashboard</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body text-center">
+                                    <h3 id="totalItems">0</h3>
+                                    <small>Total Items</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body text-center">
+                                    <h3 id="totalCategories">8</h3>
+                                    <small>Categories</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body text-center">
+                                    <h3 id="totalOrders">156</h3>
+                                    <small>Today's Orders</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-info text-white">
+                                <div class="card-body text-center">
+                                    <h3>$2,450</h3>
+                                    <small>Today's Revenue</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h6 class="mt-4 mb-3">Best Selling Items</h6>
+                    <ul class="list-group" id="bestSellingItems">
+                        <!-- Best selling items will be loaded here -->
+                    </ul>
+                    <h6 class="mt-4 mb-3">Today's Offers</h6>
+                    <div class="alert alert-warning">
+                        <i class="bi bi-tag-fill"></i> 20% OFF on all pizzas today!
+                    </div>
+                    <div class="alert alert-success">
+                        <i class="bi bi-tag-fill"></i> Free delivery on orders above $30
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert">
+            <div class="toast-header">
+                <i class="bi bi-check-circle text-success me-2"></i>
+                <strong class="me-auto">FoodieHub</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-nav d-lg-none fixed-bottom bg-white shadow">
+        <div class="d-flex justify-content-around py-2">
+            <a href="index.html" class="text-center text-decoration-none text-secondary">
+                <i class="bi bi-house-door fs-4"></i>
+                <div><small>Home</small></div>
+            </a>
+            <a href="menu.html" class="text-center text-decoration-none text-primary">
+                <i class="bi bi-grid fs-4"></i>
+                <div><small>Menu</small></div>
+            </a>
+            <a href="cart.html" class="text-center text-decoration-none text-secondary position-relative">
+                <i class="bi bi-cart3 fs-4"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="mobileCartBadge">0</span>
+                <div><small>Cart</small></div>
+            </a>
+            <a href="favorites.html" class="text-center text-decoration-none text-secondary">
+                <i class="bi bi-heart fs-4"></i>
+                <div><small>Favorites</small></div>
+            </a>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/menu.js"></script>
+</body>
+</html>
